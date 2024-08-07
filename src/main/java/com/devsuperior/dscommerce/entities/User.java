@@ -114,6 +114,16 @@ public class User implements UserDetails {
 		return roles;
 	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
 	public void addRole(Role role) {
 		roles.add(role);
 	}
@@ -142,16 +152,6 @@ public class User implements UserDetails {
 			return false;
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles;
-	}
-
-	@Override
-	public String getUsername() {
-		return email;
 	}
 
 	@Override
