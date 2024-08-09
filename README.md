@@ -43,6 +43,6 @@ Projeto desenvolvido no decorrer do curso Java Spring Professional.
 ### Get User Logged:
 ![user_get_user_logged](https://github.com/user-attachments/assets/1e9146fe-24f1-4cc0-9600-1d154b07269d)
 
-### Categori
+### Categories:
 ![category_categories](https://github.com/user-attachments/assets/b3b4097e-0190-4e53-b5e1-0491c30ce8ba)
-es:
+
