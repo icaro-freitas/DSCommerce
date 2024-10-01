@@ -25,6 +25,8 @@ import com.devsuperior.dscommerce.repositories.ProductRepository;
 import com.devsuperior.dscommerce.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dscommerce.tests.ProductFactory;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {
 
@@ -45,7 +47,7 @@ public class ProductServiceTests {
 	private void setUp() throws Exception {
 		existingProductId = 1L;
 		nonExistingProductId = 2L;
-		productName = "Playstation 5";		
+		productName = "Playstation 5";
 		product = ProductFactory.createProduct(productName);
 		productDTO = new ProductDTO(product);
 		page = new PageImpl<>(List.of(product));
@@ -54,8 +56,11 @@ public class ProductServiceTests {
 		Mockito.when(repository.findById(nonExistingProductId)).thenReturn(Optional.empty());
 
 		Mockito.when(repository.searchByName(any(), (Pageable) any())).thenReturn(page);
-		
+
 		Mockito.when(repository.save(any())).thenReturn(product);
+
+		Mockito.when(repository.getReferenceById(existingProductId)).thenReturn(product);
+		Mockito.when(repository.getReferenceById(nonExistingProductId)).thenThrow(EntityNotFoundException.class);
 	}
 
 	@Test
@@ -87,13 +92,29 @@ public class ProductServiceTests {
 		Assertions.assertEquals(result.iterator().next().getName(), productName);
 
 	}
-	
+
 	@Test
 	public void insertShouldReturnProductDTO() {
 		ProductDTO result = service.insert(productDTO);
-		
+
 		Assertions.assertNotNull(result);
 		Assertions.assertEquals(result.getId(), product.getId());
+	}
+
+	@Test
+	public void updateShouldReturnProductDTOWhenIdExists() {
+		ProductDTO result = service.update(existingProductId, productDTO);
+
+		Assertions.assertNotNull(result);
+		Assertions.assertEquals(result.getId(), existingProductId);
+		Assertions.assertEquals(result.getName(), productDTO.getName());
+	}
+
+	@Test
+	public void updateShouldReturnResourceNotFoundExceptionWhenIdDoesNotExist() {
+		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+			service.update(nonExistingProductId, productDTO);
+		});
 	}
 
 }
