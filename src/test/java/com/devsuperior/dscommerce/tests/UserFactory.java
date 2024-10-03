@@ -17,7 +17,7 @@ public class UserFactory {
 	public static User createAdminUser() {
 		User user = new User(2L, "Alex", "alex@gmail.com", "988888888", LocalDate.parse("1987-12-13"),
 				"$2a$10$1M.YfYbPpz03119u1OBn/.KMNS33GqRMAJ9W8MTfJ3vno4Zfsm/X6");
-		user.addRole(new Role(2L, "ADMIN_CLIENT"));
+		user.addRole(new Role(2L, "ROLE_ADMIN"));
 		return user;
 	}
 
