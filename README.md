@@ -13,6 +13,12 @@ Projeto desenvolvido no decorrer do curso Java Spring Professional.
 - JPA/Hibernate 
 - Spring Security
 - OAuth2
+- JUnit
+- TDD
+- Mockito
+- MockMvc
+- Jacoco
+- REST Assured
 
 ## Endpoints: 
 
